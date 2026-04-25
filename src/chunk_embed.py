@@ -141,6 +141,23 @@ def store_in_chroma(records: List[Dict]) -> None:
         embeddings=embeddings,
     )
 
+# This function is strictly to help for the DEPLOYED Streamlit app, which needs to 
+# ensure that there is a chroma collection with data in it before taking questions
+def ensure_chroma_collection() -> None:
+    """
+    Ensure the BoostRAG Chroma collection exists.
+
+    If the collection does not exist yet, load the cleaned corpus,
+    build chunk records, and store them in Chroma.
+    """
+    chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
+
+    try:
+        chroma_client.get_collection(name=COLLECTION_NAME)
+    except Exception:
+        docs = load_documents()
+        chunk_records = build_chunk_records(docs)
+        store_in_chroma(chunk_records)
 
 if __name__ == "__main__":
     docs = load_documents()

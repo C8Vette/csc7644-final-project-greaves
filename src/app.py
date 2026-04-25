@@ -3,6 +3,7 @@ from __future__ import annotations
 import streamlit as st
 
 from answer import answer_query
+from chunk_embed import ensure_chroma_collection
 
 '''
 Streamlit frontend for BoostRAG
@@ -15,6 +16,16 @@ st.set_page_config(
     page_icon="🏎️",
     layout="centered",
 )
+
+@st.cache_resource
+def initialize_vectors() -> None:
+    """
+    Initialize the Chroma vector database with embedded chunks.
+
+    This function ensures that the Chroma collection is created and populated with
+    the necessary data. It is cached so that it doesn't have to reinitialize constantly.
+    """
+    ensure_chroma_collection()
 
 st.markdown(
     """
