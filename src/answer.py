@@ -5,13 +5,14 @@ from typing import List, Dict
 
 from dotenv import load_dotenv
 from openai import OpenAI
+import streamlit as st
 
 from retrieve import retrieve_chunks
 
 
 load_dotenv()
 
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY") or st.secrets.get("OPENAI_API_KEY")
 GEN_MODEL = "gpt-5.4-mini"
 
 client = OpenAI(api_key=OPENAI_API_KEY)
