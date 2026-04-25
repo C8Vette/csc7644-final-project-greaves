@@ -178,6 +178,9 @@ st.markdown(
     unsafe_allow_html=True,
 )
 
+with st.spinner("Initializing BoostRAG's Brain..."):
+    initialize_vectors()
+    
 query = st.text_input(
     "Enter your question:",
     placeholder="Example: How much is a Dinan Stage 1 tune?",
