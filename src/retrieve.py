@@ -19,7 +19,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 def get_query_embedding(query: str) -> List[float]:
-    '''
+    """
     Generate an embedding vector for the user's query using OpenAI's API.
     
     Args:
@@ -27,7 +27,7 @@ def get_query_embedding(query: str) -> List[float]:
 
     Returns:
         Query embedding vector as a list of floats.
-    '''
+    """
     response = client.embeddings.create(
         model=EMBED_MODEL,
         input=query,
@@ -36,7 +36,7 @@ def get_query_embedding(query: str) -> List[float]:
 
 
 def retrieve_chunks(query: str, top_k: int = 3) -> List[Dict]:
-    '''
+    """
     Retrieve the most relevant chunks from the Chroma vector database based on the query embedding.
     
     Args:
@@ -45,7 +45,7 @@ def retrieve_chunks(query: str, top_k: int = 3) -> List[Dict]:
         
     Returns:
         A list of dictionaries, each containing the retrieved chunk's text, metadata, and distance score.
-    '''
+    """
     chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
     collection = chroma_client.get_collection(name=COLLECTION_NAME)
 

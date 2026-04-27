@@ -21,7 +21,7 @@ client = OpenAI(api_key=OPENAI_API_KEY)
 
 
 def chunk_text(text: str, chunk_size: int = 1200, overlap: int = 200) -> List[str]:
-    '''
+    """
     Split a document into overlapping chunks for embedding.
 
     The overlap helps to maintain context across chunks.
@@ -33,7 +33,7 @@ def chunk_text(text: str, chunk_size: int = 1200, overlap: int = 200) -> List[st
 
     Returns:
         A list of text chunks derived from the original document.
-    '''
+    """
     if not text.strip():
         return []
 
@@ -54,7 +54,7 @@ def chunk_text(text: str, chunk_size: int = 1200, overlap: int = 200) -> List[st
 
 
 def build_chunk_records(documents: List[Dict[str, str]]) -> List[Dict]:
-    '''
+    """
     Convert documents into chunk records with metadata.
 
     Each record corresponds to a chunk of text and includes:
@@ -67,7 +67,7 @@ def build_chunk_records(documents: List[Dict[str, str]]) -> List[Dict]:
 
     Returns:
         A list of chunk records ready for embedding and storage.
-    '''
+    """
     records: List[Dict] = []
 
     for doc_idx, doc in enumerate(documents):
@@ -94,7 +94,7 @@ def build_chunk_records(documents: List[Dict[str, str]]) -> List[Dict]:
 
 
 def get_embedding(text: str) -> List[float]:
-    '''
+    """
     Generate an embedding vector for the given text using OpenAI's API.
     
     Args:
@@ -102,7 +102,7 @@ def get_embedding(text: str) -> List[float]:
         
     Returns:
         A list of floats representing the embedding vector.
-    '''
+    """
     response = client.embeddings.create(
         model=EMBED_MODEL,
         input=text,
@@ -111,7 +111,7 @@ def get_embedding(text: str) -> List[float]:
 
 
 def store_in_chroma(records: List[Dict]) -> None:
-    '''
+    """
     Store chunk records in a Chroma vector database.
     
     This function creates or retrieves a Chroma collection, generates the embeddings
@@ -119,7 +119,7 @@ def store_in_chroma(records: List[Dict]) -> None:
     
     Args:
         records: A list of chunk records, each containing an ID, text, and metadata.
-    '''
+    """
     chroma_client = chromadb.PersistentClient(path=CHROMA_PATH)
     collection = chroma_client.get_or_create_collection(name=COLLECTION_NAME)
 

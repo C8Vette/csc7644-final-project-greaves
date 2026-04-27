@@ -1,3 +1,10 @@
+"""
+Streamlit frontend for BoostRAG
+
+This is supposed to be a simple UI interface for asking questions and displaying the
+answers along with their sources for testing and debugging the RAG pipeline.
+"""
+
 from __future__ import annotations
 
 import streamlit as st
@@ -5,12 +12,6 @@ import streamlit as st
 from answer import answer_query
 from chunk_embed import ensure_chroma_collection
 
-'''
-Streamlit frontend for BoostRAG
-
-This is supposed to be a simple UI interface for asking questions and displaying the
-answers along with their sources for testing and debugging the RAG pipeline.
-'''
 st.set_page_config(
     page_title="BoostRAG",
     page_icon="🏎️",
@@ -209,7 +210,7 @@ if st.button("Ask BoostRAG", type="primary"):
 
                 st.subheader("Sources used")
 
-                # Collect qunique sources so that the same file isn't shown mulitple times
+                # Collect unique sources so that the same file isn't shown multiple times
                 seen = set()
                 source_blocks = []
 

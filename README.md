@@ -44,6 +44,13 @@ BoostRAG uses a standard RAG workflow:
 - `pip` installed and available
 - OpenAI API key
 
+### Configure Environment Variables
+Create a `.env` file in the project root and add:
+
+```env
+OPENAI_API_KEY = your_openai_api_key_here
+```
+
 ### Install Dependencies
 From the project root, run:
 
@@ -54,8 +61,8 @@ pip install -r requirements.txt
 ## Running the application
 
 ### Step 1: Building the vector store
-After adding anymore cleaned corpus files to the 'data/cleaned/' folder, you have
-to build the store by running the following command:
+Run the following command to build the Chroma database with
+the current data sources:
 
 ```bash
 python src/chunk_embed.py
@@ -68,9 +75,54 @@ Run the following command to start the app:
 python -m streamlit run src/app.py
 ```
 
+### Note:
+If the page doesn't start up and you see the symbols in the
+top right cycling, just reload the page and all will be well.
+
+Additionally I deployed this app through streamlit, to access
+the Deployed version, you need only visit `boostrag.streamlit.app`.
+
+## Using The App
+
+### How to use BoostRAG
+1. Launch the app locally or open the deployed version at `boostrag.streamlit.app`. Once a new tab
+opens if running locally, be sure to reload the tab for safety in the event nothing loads initially.
+
+2. Enter a question about aftermarket or performance parts regarding the BMW M340i in the text box.
+
+3. Adjust the slider choose how many retrieved sources you want to use as supporting evidence for the
+question.
+
+4. Click "Ask BoostRAG" to generate a response.
+
+5. Check the answer you got.
+
+6. Check the "Sources Used" and debug section to see which corpus sources were used to answer your question.
+
+7. Expand the "Debug" area to see what raw data was used.
+
+### Example Questions
+- How much is a stage 1 Dinan tune?
+- Which intake mentions sound improvement?
+- which downpipe mentions gains with a tune?
+- Does any source mention warranty restrictions?
+- Which products fit the BMW G20 M340i?
+- When will Jon Snow get his own spinoff show from Game of Thrones?
+
+### Expected Behaviors
+By design, BoostRAG only answers based on the sources from its corpus (located in data/cleaned). If the corpus
+does not contain the relevant information to answer a question, it should reject it and tell you something akin to
+"I lack the relevant information to answer this questions". It will use what it has to attempt to answer an
+unrelated, yet somewhat familiar question, but it will ultimately refuse. A question you can test this with is,
+"What Turbo upgrade options are available for the m340i?" Turbos use very similar language to some of the other 
+parts included in the corpus, but there is no evidence pertaining to Turbos themselves, the model will recognize this
+after exploring sources almost in the same domain, and let the user know that it lacks the evidence. When it comes to 
+completely irrelevant questions such as questions about tv shows, the model will reject entirely.
+
+
 ## Repository Organization
 
-- `src/` - main applciation code for BoostRAG's rag pipeline and interface
+- `src/` - main application code for BoostRAG's RAG pipeline and interface
     - `answer.py` – builds the evidence context and generates grounded answers from retrieved chunks
     - `app.py` – Streamlit front end for interacting with BoostRAG
     - `chunk_embed.py` – chunks cleaned corpus documents, generates embeddings, and stores them in ChromaDB
@@ -79,8 +131,6 @@ python -m streamlit run src/app.py
 
 - `data/` – project data used by the retrieval pipeline
     - `cleaned/` – cleaned corpus text files used for retrieval
-
-- `tests/` – reserved for evaluation scripts or future automated tests
 
 - `vectorstore/` – local ChromaDB storage artifacts generated during indexing  
     - This directory is used at runtime and is ignored in Git
