@@ -8,6 +8,8 @@ BoostRAG helps users ask questions about BMW M340i aftermarket parts using a man
 
 This project focuses on a small, realistic prototype rather than a large-scale automotive search engine. The current system is scoped around one vehicle platform and a limited set of modification categories such as intakes, downpipes, and tunes.
 
+Live demo: https://boostrag.streamlit.app
+
 ## Key Features / Capabilities
 
 - Answers questions over a custom BMW M340i corpus using a RAG pipeline
@@ -48,7 +50,7 @@ BoostRAG uses a standard RAG workflow:
 Create a `.env` file in the project root and add:
 
 ```env
-OPENAI_API_KEY = your_openai_api_key_here
+OPENAI_API_KEY=your_openai_api_key_here
 ```
 
 ### Install Dependencies
@@ -76,8 +78,8 @@ python -m streamlit run src/app.py
 ```
 
 ### Note:
-If the page doesn't start up and you see the symbols in the
-top right cycling, just reload the page and all will be well.
+If Streamlit is waking from sleep, the first load may take a few moments. Refresh the page if the 
+interface does not appear after startup.
 
 Additionally I deployed this app through streamlit, to access
 the Deployed version, you need only visit `boostrag.streamlit.app`.
@@ -104,9 +106,11 @@ question.
 ### Example Questions
 - How much is a stage 1 Dinan tune?
 - Which intake mentions sound improvement?
-- which downpipe mentions gains with a tune?
+- Which downpipe mentions gains with a tune?
 - Does any source mention warranty restrictions?
 - Which products fit the BMW G20 M340i?
+
+  *Out Of Context question*
 - When will Jon Snow get his own spinoff show from Game of Thrones?
 
 ### Expected Behaviors
